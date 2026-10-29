@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FutureSkill AI | Career Intelligence</title>
+<style>
+:root{--bg:#0a1020;--panel:#121c31;--line:#283752;
+--text:#edf3ff;--muted:#a4b3cc;--blue:#79a7ff;--green:#60e3b0}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#172b50,var(--bg) 65%);
+color:var(--text);font-family:system-ui,Arial,sans-serif}
+header,main{max-width:1050px;margin:auto;padding:24px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:800;font-size:20px}.logo span{color:var(--blue)}
+.tag{font-size:12px;color:var(--green);border:1px solid #286b5a;
+padding:7px 10px;border-radius:20px}
+.hero{padding:35px 0}
+h1{font-size:clamp(32px,6vw,54px);line-height:1.08;margin:10px 0}
+h1 span{color:var(--blue)}
+p{color:var(--muted);line-height:1.7}
+.eyebrow{color:var(--green);font-size:12px;letter-spacing:2px;font-weight:bold}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:#111b2eeb;border:1px solid var(--line);
+border-radius:18px;padding:22px;margin-bottom:18px}
+h2{font-size:18px;margin-top:0}
+label{display:block;font-size:13px;color:var(--muted);margin:15px 0 8px}
+select,button{font:inherit;width:100%;border-radius:10px;padding:12px}
+select{background:#0a1325;color:var(--text);border:1px solid var(--line)}
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.skills label{margin:0;padding:10px;background:#0c1629;border:1px solid var(--line);
+border-radius:9px;display:flex;align-items:center;gap:8px}
+input{accent-color:var(--blue)}
+button{border:0;background:var(--blue);color:#081226;font-weight:800;
+cursor:pointer;margin-top:18px}
+button:hover{filter:brightness(1.1)}
+.metric{font-size:29px;font-weight:800;color:var(--green)}
+.small{font-size:12px;color:var(--muted)}
+.result{margin-top:18px}
+.pill{display:inline-block;background:#1d3453;padding:6px 10px;
+border-radius:20px;font-size:12px;margin:4px}
+ul{padding-left:20px;color:var(--muted);line-height:1.9}
+.hidden{display:none}
+footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}header,main{padding:17px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">FutureSkill<span> AI</span></div>
+  <div class="tag">CAREER INTELLIGENCE</div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow">THE FUTURE OF WORK</div>
+  <h1>Don't fear AI.<br><span>Prepare for it.</span></h1>
+  <p>Explore how AI may change your career, identify skills to develop,
+  and build your personal upskilling roadmap.</p>
+</section>
+
+<div class="layout">
+<section class="card">
+<h2>01 / Your career profile</h2>
+<label for="career">Choose your target career</label>
+<select id="career">
+<option value="developer">Software Developer</option>
+<option value="data">Data Analyst</option>
+<option value="cyber">Cybersecurity Analyst</option>
+<option value="designer">UI/UX Designer</option>
+<option value="admin">Data Entry / Admin</option>
+</select>
+<label for="level">Current experience</label>
+<select id="level">
+<option>Beginner</option><option>Intermediate</option>
+<option>Advanced</option>
+</select>
+<label>Select the skills you already have</label>
+<div class="skills" id="skillChoices"></div>
+<button onclick="analyze()">Analyze my career →</button>
+<p class="small">This demo uses a transparent, rule-based skills model.
+It does not use a live AI prediction API.</p>
+</section>
+
+<section class="card">
+<h2>02 / Your career insights</h2>
+<div id="welcome">
+  <div class="metric">Your future starts here</div>
+  <p>Select a career and your existing skills, then run the analysis.</p>
+  <span class="pill">Skill gap analysis</span>
+  <span class="pill">Career awareness</span>
+  <span class="pill">30-day roadmap</span>
+</div>
+<div id="results" class="hidden result" aria-live="polite"></div>
+</section>
+</div>
+
+<section class="card">
+<h2>03 / Why upskilling matters</h2>
+<div class="layout">
+<div><div class="metric">39%</div>
+<p>of workers' core skills are expected by the World Economic Forum
+to change by 2030.</p></div>
+<div><div class="metric">85%</div>
+<p>of surveyed employers plan to prioritize workforce upskilling,
+according to the WEF 2025 report.</p></div>
+</div>
+<p class="small">Source: World Economic Forum, Future of Jobs Report 2025.
+These figures reflect survey expectations, not guaranteed outcomes.</p>
+</section>
+</main>
+<footer>FUTURESKILL AI · STUDENT VALUE ADDED CLUB PROJECT · 2026</footer>
+
+<script>
+const careerData = {
+ developer:{
+  name:"Software Developer",
+  impact:"AI can assist with code generation, debugging and testing.
+  Developers still need design judgment, security and verification.",
+  skills:["Programming","Problem Solving","Git & GitHub","SQL",
+  "AI Tool Literacy","Communication"],
+  focus:["Programming","Problem Solving","Git & GitHub","SQL","AI Tool Literacy"]
+ },
+ data:{
+  name:"Data Analyst",
+  impact:"AI can accelerate data cleaning, summaries and reporting.
+  Data quality, interpretation and privacy remain important.",
+  skills:["SQL","Excel","Statistics","Data Visualization","AI Tool Literacy","Communication"],
+  focus:["SQL","Excel","Statistics","Data Visualization","AI Tool Literacy"]
+ },
+ cyber:{
+  name:"Cybersecurity Analyst",
+  impact:"AI can support threat detection and log analysis.
+  Security judgment, investigation and incident response remain essential.",
+  skills:["Networking","Linux","Security Basics","Python","AI Tool Literacy","Communication"],
+  focus:["Networking","Linux","Security Basics","Python","AI Tool Literacy"]
+ },
+ designer:{
+  name:"UI/UX Designer",
+  impact:"AI can generate design concepts and prototypes.
+  User research, accessibility and design decisions still require human judgment.",
+  skills:["Design Basics","Figma","User Research","Prototyping","AI Tool Literacy","Communication"],
+  focus:["Design Basics","Figma","User Research","Prototyping","AI Tool Literacy"]
+ },
+ admin:{
+  name:"Data Entry / Admin",
+  impact:"Routine data entry and document processing may be automated.
+  Accuracy, spreadsheet skills, process oversight and communication can help workers adapt.",
+  skills:["Excel","Typing Accuracy","Data Quality","Process Skills","AI Tool Literacy","Communication"],
+  focus:["Excel","Data Quality","Process Skills","AI Tool Literacy","Communication"]
+ }
+};
+const choices=document.getElementById("skillChoices");
+function renderSkills(){
+ choices.innerHTML="";
+ const d=careerData[document.getElementById("career").value];
+ d.skills.forEach((skill,i)=>{
+  const label=document.createElement("label");
+  const cb=document.createElement("input");
+  cb.type="checkbox";cb.value=skill;cb.id="skill"+i;
+  label.append(cb,document.createTextNode(skill));
+  choices.appendChild(label);
+ });
+}
+document.getElementById("career").addEventListener("change",renderSkills);
+renderSkills();
+
+function analyze(){
+ const d=careerData[document.getElementById("career").value];
+ const selected=[...choices.querySelectorAll("input:checked")].map(x=>x.value);
+ const gaps=d.focus.filter(x=>!selected.includes(x));
+ const coverage=Math.round(((d.focus.length-gaps.length)/d.focus.length)*100);
+ const level=document.getElementById("level").value;
+ const result=document.getElementById("results");
+ document.getElementById("welcome").classList.add("hidden");
+ result.classList.remove("hidden");
+ result.replaceChildren();
+
+ function add(tag,txt,cls){
+  const el=document.createElement(tag);el.textContent=txt;
+  if(cls)el.className=cls;result.appendChild(el);return el;
+ }
+ add("div",d.name,"eyebrow");
+ add("div",coverage+"%","metric");
+ add("p","Selected skill coverage: "+(d.focus.length-gaps.length)+
+ " of "+d.focus.length+" target skills. This is a simple checklist score, not a job-readiness rating.");
+ add("h3","How AI may affect this role");
+ add("p",d.impact);
+ add("h3","Skills to develop next");
+ if(!gaps.length)add("p","You checked all the target skills. Practise them in a project and assess your proficiency honestly.");
+ else gaps.forEach((s,i)=>add("div",(i+1)+". "+s,"pill"));
+ add("h3","Your 30-day starter roadmap");
+ const plans=[
+  "Days 1–7: Learn the basics of "+(gaps[0]||d.focus[0])+" and practise daily.",
+  "Days 8–14: Build a small exercise or guided mini-project.",
+  "Days 15–21: Practise "+(gaps[1]||"AI tool literacy")+" and verify AI-generated results.",
+  "Days 22–30: Complete a portfolio project, document it and explain your decisions."
+ ];
+ plans.forEach(x=>add("p",x));
+ add("p","Experience level selected: "+level+". Use this roadmap as a starter plan; adjust it to your current ability.");
+ const note=add("p","Important: AI exposure is not the same as a job disappearing. Actual outcomes depend on tasks, industry and human oversight.","small");
+ const btn=document.createElement("button");
+ btn.textContent="Print / Save as PDF";
+ btn.onclick=()=>window.print();result.appendChild(btn);
+}
+</script>
+</body>
+</html>
